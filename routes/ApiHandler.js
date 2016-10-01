@@ -26,13 +26,6 @@ var judgeResult =   [
         "poll_jude_c_2" : 0,
         "poll_jude_c_3" : 0,
         "poll_jude_c_4" : 0
-    },
-    {
-        "poll_judge_id" : 4,
-        "poll_jude_c_1" : 0,
-        "poll_jude_c_2" : 0,
-        "poll_jude_c_3" : 0,
-        "poll_jude_c_4" : 0,
     }
 ]
 var dataVar = {
@@ -1032,6 +1025,99 @@ function UpdateJudgeVoting(objectId, dataToUpdate, CallBack) {
 
 }
 
+function GetJudgeResult(pollID, CallBack) {
+    {
+
+        var resObj = [];
+
+        GetConfig(pollID, function(err, pollConfig) {
+            if (err) {
+                throw err;
+                CallBack(err);
+            }else {
+
+                var dataConfig = pollConfig[0].poll_judge_category;
+                console.log("config data ",dataConfig);
+                var weightageObj = {};
+
+                GetPollDetails(pollID, function (err, pollDetails) {
+                    if (err) {
+                        throw err;
+                        callback(err);
+                    } else {
+
+                        for(var iConfigCount = 0; iConfigCount < dataConfig.length; iConfigCount++){
+                            if(dataConfig[iConfigCount].type === "Nutrition" ) {
+                                weightageObj["poll_jude_c_1"] = dataConfig[iConfigCount].weightage;
+                            }else if(dataConfig[iConfigCount].type === "Uniqueness" ) {
+                                weightageObj["poll_jude_c_2"] = dataConfig[iConfigCount].weightage;
+                            }else if(dataConfig[iConfigCount].type === "Presentation" ) {
+                                weightageObj["poll_jude_c_4"] = dataConfig[iConfigCount].weightage;
+                            }else {
+                                weightageObj["poll_jude_c_3"] = dataConfig[iConfigCount].weightage;
+                            }
+                            console.log("weightageObj", weightageObj);
+                        }
+
+                        console.log("weightageObj", weightageObj);
+
+                        for (var iPollUserCount = 0; iPollUserCount < pollDetails.length; iPollUserCount++) {
+                            var userObj = {};
+                            userObj.poll_team_id = pollDetails[iPollUserCount].poll_team_id;
+                            userObj.poll_team_name = pollDetails[iPollUserCount].poll_team_name;
+
+                            // var pollJudgeMarks = pollDetails[iPollUserCount].poll_judge_marks.filter(function (obj) {
+                            //     return obj.poll_judge_id == judgeID;
+                            // })
+
+                            var pollJudgeMarks = pollDetails[iPollUserCount].poll_judge_marks;
+                            var totalMarks;
+
+                            for (var iCount = 0; iCount < pollJudgeMarks.length; iCount++) {
+                                console.log("pollJudgeMarks[0]", pollJudgeMarks[iCount]);
+    
+                                userObj.poll_jude_c_1 = pollJudgeMarks[iCount]["poll_jude_c_1"];
+                                userObj.poll_jude_c_2 = pollJudgeMarks[iCount]["poll_jude_c_2"];
+                                userObj.poll_jude_c_3 = pollJudgeMarks[iCount]["poll_jude_c_3"];
+                                userObj.poll_jude_c_4 = pollJudgeMarks[iCount]["poll_jude_c_4"];
+                                var total = pollJudgeMarks[iCount].poll_jude_c_1 * weightageObj["poll_jude_c_1"];
+                                total += pollJudgeMarks[iCount].poll_jude_c_2 * weightageObj["poll_jude_c_2"];
+                                total += pollJudgeMarks[iCount].poll_jude_c_3 * weightageObj["poll_jude_c_3"];
+                                total += pollJudgeMarks[iCount].poll_jude_c_4 * weightageObj["poll_jude_c_4"];
+
+                                if(total === 0){
+                                    totalMarks = 0;
+                                }else {
+
+                                    totalMarks = totalMarks + (total / 10);
+                                }
+
+                            }
+                            if( totalMarks === 0){
+                                userObj.poll_total = 0;
+                            }else{
+                                userObj.poll_total = totalMarks/3;
+                            }
+
+                            //userObj.DT_RowId = pollJudgeMarks[0]._id;
+
+
+                            console.log("pollJudgeMarks", userObj);
+
+                            resObj.push(userObj);
+
+                        }
+
+                        CallBack("", resObj)
+                    }
+                });
+            }
+        });
+
+    }
+
+}
+
 function GetJudePollData(pollID,judgeID, CallBack) {
 
     var resObj = [];
@@ -1053,8 +1139,6 @@ function GetJudePollData(pollID,judgeID, CallBack) {
                     callback(err);
                 } else {
 
-
-
                     for(var iConfigCount = 0; iConfigCount < dataConfig.length; iConfigCount++){
                         if(dataConfig[iConfigCount].type === "Nutrition" ) {
                             weightageObj["poll_jude_c_1"] = dataConfig[iConfigCount].weightage;
@@ -1074,6 +1158,8 @@ function GetJudePollData(pollID,judgeID, CallBack) {
                         var userObj = {};
                         userObj.poll_team_id = pollDetails[iPollUserCount].poll_team_id;
                         userObj.poll_team_name = pollDetails[iPollUserCount].poll_team_name;
+
+                        console.log("pollJudgeMarks[0]", judgeID, pollDetails[iPollUserCount].poll_judge_marks);
 
                         var pollJudgeMarks = pollDetails[iPollUserCount].poll_judge_marks.filter(function (obj) {
                             return obj.poll_judge_id == judgeID;
@@ -1152,9 +1238,10 @@ module.exports = {
     },
     poll_judge_vote_post : function (req, res) {
         var editBody = req.body;
-        console.log("body from post", editBody);
+
 
         var judgeID  = req.params.judgeId;
+        console.log("body from post", judgeID, editBody);
 
         if(editBody.action === "edit"){
             var idObj = editBody.data;
@@ -1186,7 +1273,19 @@ module.exports = {
 
         console.log("in get data");
 
-        GetJudePollData('KK2018', judgeID, function (err, judgeData) {
+        GetJudePollData('KK2018',judgeID, function (err, judgeData) {
+
+            //console.log("data for judge", judgeData)
+            res.json({"data":judgeData});
+        })
+    },
+    poll_judge_result_data : function (req, res) {
+
+        var judgeID  = req.params.judgeId;
+
+        console.log("in get data");
+
+        GetJudgeResult('KK2018', function (err, judgeData) {
 
             //console.log("data for judge", judgeData)
             res.json({"data":judgeData});

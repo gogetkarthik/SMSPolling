@@ -34,6 +34,9 @@ app.get('/poll_sample_data/:judgeId', ApiHandler.poll_judge_vote_data);
 
 app.post('/poll_sample_data/:judgeId', ApiHandler.poll_judge_vote_post);
 
+
+app.get('/poll_judge_result/:pollId', ApiHandler.poll_judge_result_data);
+
 app.post('/poll/polling', ApiHandler.poll_vote);
 
 app.get('/poll/config/:poll_id', ApiHandler.poll_configs);
