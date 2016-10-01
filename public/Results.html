@@ -1,10 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Kitchen Killadi 2016</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/shop-homepage.css" rel="stylesheet">
+    <link href="css/styleSheet.css" rel="stylesheet">
+
+    <link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css" rel="stylesheet">
+    <link href="Editor-1.5.6/css/editor.dataTables.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </head>
+
 <body>
 
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/index.html">Kitchen Killadi</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="/Admin.html">Create Contestant</a>
+                </li>
+                <li>
+                    <a href="/JudgeVoting.html">Judge Voting</a>
+                </li>
+                <li>
+                    <a href="/Voting.html">User Voting</a>
+                </li>
+                <li>
+                    <a href="/Results.html">Voting Result</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-horizontal">
+                <div class="form-group"  >
+                    <table id="resultDisplay" class="table-striped">
+
+                    </table>
+                </div >
+            </form>
+        </div>
+    </div>
+
+</div>
+<!-- /.container -->
+
+<!-- jQuery -->
+<script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.2.0/js/dataTables.select.min.js"></script>
+<script src="Editor-1.5.6/js/dataTables.editor.js"></script>
+
+
+<script >
+    $( document ).ready(function() {
+
+        var table = $('#resultDisplay').DataTable({
+            ajax: "/poll/details/KK2018",
+            "aoColumnDefs": [
+                {   sTitle: '#',
+                    "aTargets": [0],
+                    data: null,
+                    className: "col-xs-1 alignCenter"},
+                {
+                    sTitle: "Team ID", "aTargets": [1],
+                    "mData": function (source, type, row) {
+                        return source.poll_team_id;
+                    },
+                    className: "col-xs-2 alignCenter"
+                },
+                {
+                    sTitle: "Team Name",
+                    "aTargets": [2],
+                    "mData": function (source, type, row) {
+                        return source.poll_team_name;
+                    },
+                    className: "col-xs-2 alignCenter"
+                },
+                {
+                    sTitle: "Team Members",
+                    "aTargets": [3],
+                    "mData": function (source, type, row) {
+                        var member = source.poll_team_members[0].name +", " +source.poll_team_members[1].name;
+                        return member;
+                    },
+                    className: "col-xs-2 alignCenter"
+                },
+                {
+                    sTitle: "Vote Count",
+                    "aTargets": [4],
+                    "mData": function (source, type, row) {
+                        return source.poll_team_votes.length;
+                    },
+                    className: "col-xs-2  alignCenter"
+                }
+            ]
+        });
+        table.on('order.dt search.dt', function () {
+            table.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1;
+            });
+            table
+                    .column( '4:visible' )
+                    .order( 'dsc' )
+        }).draw();
+
+    });
+</script>
+
 </body>
+
 </html>

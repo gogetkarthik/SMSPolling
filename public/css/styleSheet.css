@@ -1,0 +1,44 @@
+.alignCenter{
+    text-align: center !important;
+}
+
+hr {
+    border-top: 0px solid #eee !important;
+}
+
+
+#footer{
+    position: absolute;
+    bottom: 0;
+    height: 0px;
+    background: #f0f0f0;
+    width: 80%;
+}
+
+
+
+.navbar-inverse{
+    border:0;
+    /*background: transparent url('../images/CIF-web-banner.png') no-repeat ;*/
+    object-fit: cover;
+    background-size: 100% 100%;
+    margin: 0px !important;
+
+
+}
+
+
+.navbar-inverse img
+{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+}
+
+
+#resultDisplay_length > label > select {
+
+    color: black !important;
+}
+

@@ -7,21 +7,42 @@ var urlencoded = require('body-parser').urlencoded;
 var config = require('./config');
 var voice = require('./routes/voice');
 var message = require('./routes/message');
+var inboundsms = require('./routes/inboundsms');
 var results = require('./routes/results');
+var bodyParser = require('body-parser');
+var ApiHandler = require('./routes/ApiHandler');
 
 // initialize MongoDB connection
-mongoose.connect(config.mongoUrl);
+mongoose.connect('mongodb://localhost/survey');
 
 // Create Express web app with some useful middleware
 var app = express();
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+// app.use(urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan('combined'));
 
 // Twilio Webhook routes
 app.post('/voice', voice.interview);
 app.post('/voice/:responseId/transcribe/:questionIndex', voice.transcription);
 app.post('/message', message);
+app.post('/inboundsms', ApiHandler.poll_sms)
+
+app.get('/poll_sample_data/:judgeId', ApiHandler.poll_judge_vote_data);
+
+app.post('/poll_sample_data/:judgeId', ApiHandler.poll_judge_vote_post);
+
+app.post('/poll/polling', ApiHandler.poll_vote);
+
+app.get('/poll/config/:poll_id', ApiHandler.poll_configs);
+app.get('/poll/details/:poll_id', ApiHandler.poll_details);
+
+
+/* user creation */
+app.post('/poll/user/create/:pollID', ApiHandler.poll_create_user);
+
 
 // Ajax route to aggregate response data for the UI
 app.get('/results', results);

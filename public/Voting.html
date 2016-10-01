@@ -1,10 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Kitchen Killadi 2016</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/shop-homepage.css" rel="stylesheet">
+    <link href="css/styleSheet.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </head>
-<body>
+
+<body >
+
+<nav class="navbar navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div id="backImage">
+            <img src="images/CIF-web-banner.png" alt="Kitchen Killadi" style="width:80%;height:70px;">
+        </div>
+    </div>
+</nav>
+    <!-- /.container -->
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <p class="col-md-12">
+            <form class="form-horizontal" id="formID">
+
+                    <p  style="width: 80%; text-align: center; font-weight: bold; font-size: x-large" class="btn btn-lg ">Kitchen Khilladi 2016 - Audience Voting</p>
+                <p id="resultDisplay">
+
+                </p>
+
+                <div class="form-group ">
+                    <label for="exampleInputName2" class="col-sm-offset-3 col-sm-1 control-label btn btn-info alignCenter">Unique ID*</label>
+                    <div class="col-sm-3">
+                    <input type="text" class="form-control" id="exampleInputName2" placeholder="XXXXX">
+                        </div>
+                </div>
+                <div class="form-group col-sm-offset-2">
+                    <label for="exampleInputEmail2" class="col-sm-offset-3 col-sm-1 control-label btn btn-info alignCenter">Vote 1*</label>
+                    <div class="col-sm-3">
+                    <input type="text" class="form-control" id="exampleInputEmail2" placeholder="00">
+                        </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail2" class="col-sm-offset-3 col-sm-1 control-label btn btn-info alignCenter">Vote 2</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="exampleInputEmail3" placeholder="00">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail2" class="col-sm-offset-3 col-sm-1 control-label btn btn-info alignCenter">Vote 3</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="exampleInputEmail5" placeholder="00">
+                    </div>
+                </div>
+                <div class="col-sm-offset-5 col-sm-10">
+                <button type="submit" class="btn btn-primary" id="castVote">   Vote     </button>
+                    </div>
+
+
+            </form>
+        </div>
+    </div>
+
+</div>
+<!-- /.container -->
+
+<div class="container">
+
+    <hr>
+
+    <!-- Footer -->
+    <footer >
+                <p style="width: 80%; text-align: center; font-weight: bold;" class="btn btn-lg bg-info" >**Please vote for top 3 teams. You can't change votes once casted </p>
+
+    </footer>
+
+</div>
+
+
+<!-- jQuery -->
+<script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+
+
+<script >
+    $( document ).ready(function() {
+
+        if(!String.prototype.trim) {
+            String.prototype.trim = function () {
+                return this.replace(/^\s+|\s+$/g,'');
+            };
+        }
+        String.prototype.splitPlus = function(sep) {
+            var a = this.split(sep)
+            if (a[0] == '' && a.length == 1) return [];
+            return a;
+        };
+
+        function cleanTextBox() {
+            formID.reset();
+        }
+
+        function msgDisplay(message) {
+            //$( "#resultDisplay" ).html( '<p style="text-align: center; " class="btn btn-lg bg-success" >' + message  +'  </p>' ).show().fadeOut(5000, function() { $(this).hide(); });
+
+            $( "#resultDisplay" ).html( '<p  style="width: 80%; text-align: center; font-weight: bold;" class="btn btn-lg bg-success">'+ message +'</p>').show().fadeOut(5000, function() { $(this).hide(); });
+        }
+
+        $(document).on("click", "#castVote", function (event) {
+            event.preventDefault();
+
+            var string1 = $('#exampleInputEmail2').val().trim();
+            var string2 =$('#exampleInputEmail3').val().trim()
+            var string3 =$('#exampleInputEmail5').val().trim()
+
+
+            console.log("contestantIds1", string1.length);
+
+            var uniqueID = $('#exampleInputName2').val();
+            var contestantIds1 = string1.splitPlus(" ");
+            var contestantIds2 = string2.splitPlus(" ");
+            var contestantIds3 = string3.splitPlus(" ");
+
+            console.log("contestantIds1", contestantIds1);
+
+            if(uniqueID.length !== 5 ){
+                cleanTextBox();
+                msgDisplay('please enter valid 5 digit unique id ');
+            }
+            else if( contestantIds1.length > 1 || contestantIds2.length > 1 || contestantIds3.length > 1){
+                cleanTextBox();
+                msgDisplay('invalid input in voting section, please enter only one team ID in one voting field');
+            }else if( contestantIds1.length <= 0 && contestantIds2.length <= 0 && contestantIds3.length <= 0) {
+                cleanTextBox();
+                msgDisplay('please enter at least one valid team ID');
+            }
+
+//            }else if( contestantIds1[0] ===  contestantIds2[0] || contestantIds2[0] ===  contestantIds3[0] || contestantIds1[0] ===  contestantIds3[0] ){
+//                cleanTextBox();
+//                msgDisplay('can\'t vote 2 times for the same team' );
+//            }
+            else {
+
+                var contestantIds = [];
+
+                if(contestantIds1.length === 1){
+                    contestantIds.push(contestantIds1[0]);
+                }
+                if(contestantIds2.length === 1){
+                    contestantIds.push(contestantIds2[0]);
+                }
+                if(contestantIds3.length === 1){
+                    contestantIds.push(contestantIds3[0]);
+                }
+
+                console.log("clicked vote", uniqueID, contestantIds);
+
+                $.ajax({
+                    url: "/poll/polling",
+                    type: "POST",
+                    data: JSON.stringify({
+                        "poll_id": "KK2018",
+                        "uniqueId": uniqueID,
+                        "contestent": contestantIds
+                    }),
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (data) {
+                        console.log("response", data);
+                        cleanTextBox();
+                        msgDisplay(data.message);
+                    }
+                });
+            }
+        });
+    });
+</script>
 
 </body>
+
 </html>
