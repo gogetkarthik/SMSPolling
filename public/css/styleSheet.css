@@ -23,10 +23,29 @@ hr {
     object-fit: cover;
     background-size: 100% 100%;
     margin: 0px !important;
-
-
+    background-color: #855a9c !important;
 }
 
+.navbar-inverse .navbar-nav>li>a {
+    color: #f1eded;
+}
+
+.navbar-inverse .navbar-brand  {
+    color: #f1eded;
+}
+
+#imgDiv {
+    width: 100%;
+    white-space: nowrap;
+    overflow-x: auto;
+    padding-left : 28% !important;
+}
+
+#bgImg {
+    display: inline-block;
+    height: 100vh;
+    width: auto;
+}
 
 .navbar-inverse img
 {
@@ -37,8 +56,18 @@ hr {
 }
 
 
+.btn-info {
+    color: #fff;
+    background-color:  #855a9c;
+    border-color:  #855a9c;
+}
+
+
 #resultDisplay_length > label > select {
 
     color: black !important;
 }
+
+
+
 

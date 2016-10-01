@@ -101,7 +101,7 @@
     $( document ).ready(function() {
 
         var table = $('#resultDisplay').DataTable({
-            ajax: "/poll/details/KK2018",
+            ajax: "/poll_judge_result/KK2018",
             "aoColumnDefs": [
                 {   sTitle: '#',
                     "aTargets": [0],
@@ -126,18 +126,9 @@
                     sTitle: "Team Members",
                     "aTargets": [3],
                     "mData": function (source, type, row) {
-                        var member = source.poll_team_members[0].name +", " +source.poll_team_members[1].name;
-                        return member;
+                        return source.poll_total;
                     },
                     className: "col-xs-2 alignCenter"
-                },
-                {
-                    sTitle: "Vote Count",
-                    "aTargets": [4],
-                    "mData": function (source, type, row) {
-                        return source.poll_team_votes.length;
-                    },
-                    className: "col-xs-2  alignCenter"
                 }
             ]
         });
@@ -146,7 +137,7 @@
                 cell.innerHTML = i + 1;
             });
             table
-                    .column( '4:visible' )
+                    .column( '3:visible' )
                     .order( 'dsc' )
         }).draw();
 

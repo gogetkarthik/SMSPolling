@@ -17,6 +17,7 @@
     <!-- Custom CSS -->
     <link href="css/shop-homepage.css" rel="stylesheet">
     <link href="css/styleSheet.css" rel="stylesheet">
+    <link href="css/styleSheet.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,213 +28,60 @@
 
 </head>
 
-<body>
+<body >
 
-<!-- Navigation -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-fixed-top" role="navigation">
     <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/index.html">Kitchen Killadi</a>
+        <div id="backImage">
+            <img src="images/CIF-web-banner.png" alt="Kitchen Killadi" style="width:80%;height:70px;">
         </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="/Admin.html">Create Contestant</a>
-                </li>
-                <li>
-                    <a href="/JudgeVoting.html">Judge Voting</a>
-                </li>
-                <li>
-                    <a href="/Voting.html">User Voting</a>
-                </li>
-                <li>
-                    <a href="/Results.html">Voting Result</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
     </div>
-    <!-- /.container -->
 </nav>
-
+    <!-- /.container -->
 <!-- Page Content -->
 <div class="container">
 
     <div class="row">
 
-        <div class="col-md-3">
-            <p class="lead">Kitchen Killadi</p>
-            <div class="list-group">
-                <a href="#" class="list-group-item">Category 1</a>
-                <a href="#" class="list-group-item">Category 2</a>
-                <a href="#" class="list-group-item">Category 3</a>
-            </div>
+        <p class="col-md-12">
+            <form class="form-horizontal" id="formID">
+
+                    <p  style="width: 80%; text-align: center; font-weight: bold; font-size: x-large" class="btn btn-lg ">Kitchen Khilladi 2016 - Audience Voting</p>
+                <p id="resultDisplay">
+
+                </p>
+
+                <div class="form-group ">
+                    <label for="exampleInputName2" class="col-sm-offset-3 col-sm-1 control-label btn btn-info alignCenter">Unique ID*</label>
+                    <div class="col-sm-3">
+                    <input type="text" class="form-control" id="exampleInputName2" placeholder="XXXXX">
+                        </div>
+                </div>
+                <div class="form-group col-sm-offset-2">
+                    <label for="exampleInputEmail2" class="col-sm-offset-3 col-sm-1 control-label btn btn-info alignCenter">Vote 1*</label>
+                    <div class="col-sm-3">
+                    <input type="text" class="form-control" id="exampleInputEmail2" placeholder="00">
+                        </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail2" class="col-sm-offset-3 col-sm-1 control-label btn btn-info alignCenter">Vote 2</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="exampleInputEmail3" placeholder="00">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail2" class="col-sm-offset-3 col-sm-1 control-label btn btn-info alignCenter">Vote 3</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="exampleInputEmail5" placeholder="00">
+                    </div>
+                </div>
+                <div class="col-sm-offset-5 col-sm-10">
+                <button type="submit" class="btn btn-info" id="castVote">   Vote     </button>
+                    </div>
+
+
+            </form>
         </div>
-
-        <div class="col-md-9">
-
-            <div class="row carousel-holder">
-
-                <div class="col-md-12">
-                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                        </ol>
-                        <div class="carousel-inner">
-                            <div class="item active">
-                                <img class="slide-image" src="http://placehold.it/800x300" alt="">
-                            </div>
-                            <div class="item">
-                                <img class="slide-image" src="http://placehold.it/800x300" alt="">
-                            </div>
-                            <div class="item">
-                                <img class="slide-image" src="http://placehold.it/800x300" alt="">
-                            </div>
-                        </div>
-                        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left"></span>
-                        </a>
-                        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-right"></span>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="row">
-
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4 class="pull-right">$24.99</h4>
-                            <h4><a href="#">First Product</a>
-                            </h4>
-                            <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
-                        </div>
-                        <div class="ratings">
-                            <p class="pull-right">15 reviews</p>
-                            <p>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4 class="pull-right">$64.99</h4>
-                            <h4><a href="#">Second Product</a>
-                            </h4>
-                            <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </div>
-                        <div class="ratings">
-                            <p class="pull-right">12 reviews</p>
-                            <p>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4 class="pull-right">$74.99</h4>
-                            <h4><a href="#">Third Product</a>
-                            </h4>
-                            <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </div>
-                        <div class="ratings">
-                            <p class="pull-right">31 reviews</p>
-                            <p>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4 class="pull-right">$84.99</h4>
-                            <h4><a href="#">Fourth Product</a>
-                            </h4>
-                            <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </div>
-                        <div class="ratings">
-                            <p class="pull-right">6 reviews</p>
-                            <p>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4 class="pull-right">$94.99</h4>
-                            <h4><a href="#">Fifth Product</a>
-                            </h4>
-                            <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </div>
-                        <div class="ratings">
-                            <p class="pull-right">18 reviews</p>
-                            <p>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <h4><a href="#">Like this template?</a>
-                    </h4>
-                    <p>If you like this template, then check out <a target="_blank" href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">this tutorial</a> on how to build a working review system for your online store!</p>
-                    <a class="btn btn-primary" target="_blank" href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">View Tutorial</a>
-                </div>
-
-            </div>
-
-        </div>
-
     </div>
 
 </div>
@@ -244,22 +92,116 @@
     <hr>
 
     <!-- Footer -->
-    <footer>
-        <div class="row">
-            <div class="col-lg-12">
-                <p>Copyright &copy; KK2016</p>
-            </div>
-        </div>
+    <footer >
+                <p style="width: 80%; text-align: center; font-weight: bold;" class="btn btn-lg bg-info" >**Please vote for top 3 teams. You can't change votes once casted </p>
+
     </footer>
 
 </div>
-<!-- /.container -->
+
 
 <!-- jQuery -->
+
 <script src="js/jquery.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
+
+
+<script >
+    $( document ).ready(function() {
+
+        if(!String.prototype.trim) {
+            String.prototype.trim = function () {
+                return this.replace(/^\s+|\s+$/g,'');
+            };
+        }
+        String.prototype.splitPlus = function(sep) {
+            var a = this.split(sep)
+            if (a[0] == '' && a.length == 1) return [];
+            return a;
+        };
+
+        function cleanTextBox() {
+            formID.reset();
+        }
+
+        function msgDisplay(message) {
+            //$( "#resultDisplay" ).html( '<p style="text-align: center; " class="btn btn-lg bg-success" >' + message  +'  </p>' ).show().fadeOut(5000, function() { $(this).hide(); });
+
+            $( "#resultDisplay" ).html( '<p  style="width: 80%; text-align: center; font-weight: bold;" class="btn btn-lg bg-success">'+ message +'</p>').show().fadeOut(5000, function() { $(this).hide(); });
+
+        }
+
+        $(document).on("click", "#castVote", function (event) {
+            event.preventDefault();
+
+            var string1 = $('#exampleInputEmail2').val().trim();
+            var string2 =$('#exampleInputEmail3').val().trim()
+            var string3 =$('#exampleInputEmail5').val().trim()
+
+
+            console.log("contestantIds1", string1.length);
+
+            var uniqueID = $('#exampleInputName2').val();
+            var contestantIds1 = string1.splitPlus(" ");
+            var contestantIds2 = string2.splitPlus(" ");
+            var contestantIds3 = string3.splitPlus(" ");
+
+            console.log("contestantIds1", contestantIds1);
+
+            if(uniqueID.length !== 5 ){
+                cleanTextBox();
+                msgDisplay('please enter valid 5 digit unique id ');
+            }
+            else if( contestantIds1.length > 1 || contestantIds2.length > 1 || contestantIds3.length > 1){
+                cleanTextBox();
+                msgDisplay('invalid input in voting section, please enter only one team ID in one voting field');
+            }else if( contestantIds1.length <= 0 && contestantIds2.length <= 0 && contestantIds3.length <= 0) {
+                cleanTextBox();
+                msgDisplay('please enter at least one valid team ID');
+            }
+
+//            }else if( contestantIds1[0] ===  contestantIds2[0] || contestantIds2[0] ===  contestantIds3[0] || contestantIds1[0] ===  contestantIds3[0] ){
+//                cleanTextBox();
+//                msgDisplay('can\'t vote 2 times for the same team' );
+//            }
+            else {
+
+                var contestantIds = [];
+
+                if(contestantIds1.length === 1){
+                    contestantIds.push(contestantIds1[0]);
+                }
+                if(contestantIds2.length === 1){
+                    contestantIds.push(contestantIds2[0]);
+                }
+                if(contestantIds3.length === 1){
+                    contestantIds.push(contestantIds3[0]);
+                }
+
+                console.log("clicked vote", uniqueID, contestantIds);
+
+                $.ajax({
+                    url: "/poll/polling",
+                    type: "POST",
+                    data: JSON.stringify({
+                        "poll_id": "KK2018",
+                        "uniqueId": uniqueID,
+                        "contestent": contestantIds
+                    }),
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (data) {
+                        console.log("response", data);
+                        cleanTextBox();
+                        msgDisplay(data.message);
+                    }
+                });
+            }
+        });
+    });
+</script>
 
 </body>
 

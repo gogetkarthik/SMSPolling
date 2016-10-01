@@ -49,13 +49,28 @@ var poll_details_schema = new Schema({
 ]
 });
 
+var mobilenumber = new Schema({
+    "mobile_number" : Schema.Types.Mixed
+});
+
+// var xyzcollect = new Schema({
+//     _id:Number,
+//     "n_1":Schema.Types.Mixed,
+//     "n":Schema.Types.Mixed
+//
+// });
+
 // the schema is useless so far
 // we need to create a model using it
 var poll_config_fun = mongoose.model('poll_configs', poll_config_schema);
 var poll_details_fun = mongoose.model('poll_details', poll_details_schema);
+var mobilenumberfun = mongoose.model('mobilenumber', poll_details_schema);
+
 
 // make this available to our users in our Node applications
 module.exports = {
     poll_config : poll_config_fun,
-    poll_details : poll_details_fun
+    poll_details : poll_details_fun,
+    mobilenumber : mobilenumberfun
+
 };

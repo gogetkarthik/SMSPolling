@@ -731,6 +731,7 @@ function isObjEmpty(objName) {
    return Object.keys(objName).length === 0;
 }
 
+
 function eliminateDuplicates(arr) {
     var i,
         len=arr.length,
@@ -747,6 +748,10 @@ function eliminateDuplicates(arr) {
 }
 function isEmpty(value) {
     return !(value == null || value.length === 0);
+}
+
+Number.prototype.round = function(places) {
+    return +(Math.round(this + "e+" + places)  + "e-" + places);
 }
 
 function  HandlePolling(pollId, uniqueId, contestant, cb) {
@@ -905,7 +910,7 @@ function GetConfig(pollId, CallBack) {
             throw err;
             CallBack("error occured while getting config");
         }else{
-            console.log("pollConfig :", pollConfig[0])
+            //console.log("pollConfig :", pollConfig[0])
             CallBack("",pollConfig);
         }
 
@@ -962,6 +967,30 @@ function UpdatePollDetails(objectId, uniqueId, CallBack) {
         }
         CallBack("","user created successfully");
     });
+}
+
+function UpdateMobile( mobileNum, CallBack) {
+
+    // var newstr = mobileNum.replace(/\+/i, '');
+    //
+    var abcd = new poll_model.mobilenumber({"n":mobileNum.toString()});
+
+    console.log("mobile number", abcd);
+    abcd.save(function(err, resObj) {
+        if (err){
+            console.log("err :", err);
+            throw err;
+            CallBack("error occured while getting poll details");
+        }
+        CallBack("", resObj);
+    });
+    // poll_model.mobile_number.update({n_id:1},{ $push: { mobile_number: mobileNum } }, function(err, updateDetails) {
+    //     if (err){
+    //         throw err;
+    //         CallBack("error occured while getting poll details");
+    //     }
+    //     CallBack("","mobile updated");
+    // });
 }
 
 function UpdateJudgeVoting(objectId, dataToUpdate, CallBack) {
@@ -1071,21 +1100,21 @@ function GetJudgeResult(pollID, CallBack) {
                             // })
 
                             var pollJudgeMarks = pollDetails[iPollUserCount].poll_judge_marks;
-                            var totalMarks;
+                            var totalMarks = 0;
 
                             for (var iCount = 0; iCount < pollJudgeMarks.length; iCount++) {
                                 console.log("pollJudgeMarks[0]", pollJudgeMarks[iCount]);
     
-                                userObj.poll_jude_c_1 = pollJudgeMarks[iCount]["poll_jude_c_1"];
-                                userObj.poll_jude_c_2 = pollJudgeMarks[iCount]["poll_jude_c_2"];
-                                userObj.poll_jude_c_3 = pollJudgeMarks[iCount]["poll_jude_c_3"];
-                                userObj.poll_jude_c_4 = pollJudgeMarks[iCount]["poll_jude_c_4"];
+                                // userObj.poll_jude_c_1 = pollJudgeMarks[iCount]["poll_jude_c_1"];
+                                // userObj.poll_jude_c_2 = pollJudgeMarks[iCount]["poll_jude_c_2"];
+                                // userObj.poll_jude_c_3 = pollJudgeMarks[iCount]["poll_jude_c_3"];
+                                // userObj.poll_jude_c_4 = pollJudgeMarks[iCount]["poll_jude_c_4"];
                                 var total = pollJudgeMarks[iCount].poll_jude_c_1 * weightageObj["poll_jude_c_1"];
                                 total += pollJudgeMarks[iCount].poll_jude_c_2 * weightageObj["poll_jude_c_2"];
                                 total += pollJudgeMarks[iCount].poll_jude_c_3 * weightageObj["poll_jude_c_3"];
                                 total += pollJudgeMarks[iCount].poll_jude_c_4 * weightageObj["poll_jude_c_4"];
 
-                                if(total === 0){
+                                if(total === 0 && totalMarks == 0 ){
                                     totalMarks = 0;
                                 }else {
 
@@ -1096,7 +1125,7 @@ function GetJudgeResult(pollID, CallBack) {
                             if( totalMarks === 0){
                                 userObj.poll_total = 0;
                             }else{
-                                userObj.poll_total = totalMarks/3;
+                                userObj.poll_total = (totalMarks/3).round(3);
                             }
 
                             //userObj.DT_RowId = pollJudgeMarks[0]._id;
@@ -1223,8 +1252,18 @@ module.exports = {
     },
     poll_sms : function (req, res) {
         var bodySms = req.body;
-        console.log("inbound message",typeof bodySms);
+        console.log("inbound message", bodySms);
         var smsArray = bodySms.Body.split(" ");
+
+        var mobile = bodySms.From;
+
+        // UpdateMobile(mobile, function (err, resObj) {
+        //     if(err){
+        //         throw err;
+        //     }
+        //     console.log("UpdateMobile", resObj);
+        // })
+
 
         console.log("sms array",smsArray.slice(2,smsArray.length));
         if(smsArray.length>= 2 ) {
