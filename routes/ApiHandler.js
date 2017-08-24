@@ -976,8 +976,23 @@ function UpdateMobile( mobileNum, CallBack) {
     console.log("err :", mobileNum);
     //
     var abcd = new poll_model.mobilenumber({"mobile_number":mobileNum});
+    // var abcd = new poll_model.mobilenumber( {_id: mongoose.Types.ObjectId('599f1472afb999051b269e57')},
+    //     {$addToSet: { mobile_number: mobileNum } }, false, true);
 
-    console.log("mobile number", abcd);
+    // db.tags.update(
+    //     {name: 'sport'},
+    //     {$addToSet: { videoIDs: "34f54e34c" } }
+    // );
+
+    // console.log("mobile number", abcd);
+    // abcd.update(function(err, resObj) {
+    //     if (err){
+    //         console.log("err :", err);
+    //         throw err;
+    //         CallBack("error occured while getting poll details");
+    //     }
+    //     CallBack("", resObj);
+    // });
     abcd.save(function(err, resObj) {
         if (err){
             console.log("err :", err);
