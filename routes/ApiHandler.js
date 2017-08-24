@@ -972,8 +972,10 @@ function UpdatePollDetails(objectId, uniqueId, CallBack) {
 function UpdateMobile( mobileNum, CallBack) {
 
     // var newstr = mobileNum.replace(/\+/i, '');
+
+    console.log("err :", mobileNum);
     //
-    var abcd = new poll_model.mobilenumber({"n":mobileNum.toString()});
+    var abcd = new poll_model.mobilenumber({"mobile_number":mobileNum});
 
     console.log("mobile number", abcd);
     abcd.save(function(err, resObj) {
@@ -998,8 +1000,13 @@ function UpdateJudgeVoting(objectId, dataToUpdate, CallBack) {
     var id = mongoose.Types.ObjectId(objectId);
 
     var answerKey = Object.keys(dataToUpdate);
-    answerKey = answerKey[0];
-    var value = dataToUpdate[answerKey];
+    console.log("anser key", answerKey);
+    answerKey = answerKey[1];
+    var c_1 = dataToUpdate['poll_jude_c_1'];
+    var c_2 = dataToUpdate['poll_jude_c_2'];
+    var c_3 = dataToUpdate['poll_jude_c_3'];
+    var c_4 = dataToUpdate['poll_jude_c_4'];
+
 
 
     // poll_model.poll_details.find({"poll_judge_marks._id":id}, function(err, find) {
@@ -1011,46 +1018,50 @@ function UpdateJudgeVoting(objectId, dataToUpdate, CallBack) {
     //         CallBack("","vote updated  successfully");
     // });
     var queryStr = "poll_judge_marks.$."+answerKey;
-    console.log("obj id :", id, dataToUpdate, answerKey, value, queryStr);
-    if(answerKey === "poll_jude_c_1"){
-        poll_model.poll_details.update({"poll_judge_marks._id":id},{$set : {"poll_judge_marks.$.poll_jude_c_1":value}}, { upsert: true}, function(err, updateDetails) {
-            if (err){
-                throw err;
-                CallBack("error occured while getting judge voting");
-            }
-            console.log("updateDetails : ", updateDetails)
-            CallBack("","vote updated  successfully");
-        });
-    }else if(answerKey === "poll_jude_c_2"){
-        poll_model.poll_details.update({"poll_judge_marks._id":id},{$set : {"poll_judge_marks.$.poll_jude_c_2":value}}, { upsert: true}, function(err, updateDetails) {
-            if (err){
-                throw err;
-                CallBack("error occured while getting judge voting");
-            }
-            console.log("updateDetails : ", updateDetails)
-            CallBack("","vote updated  successfully");
-        });
-    }else if(answerKey === "poll_jude_c_3"){
-        poll_model.poll_details.update({"poll_judge_marks._id":id},{$set : {"poll_judge_marks.$.poll_jude_c_3":value}}, { upsert: true}, function(err, updateDetails) {
-            if (err){
-                throw err;
-                CallBack("error occured while getting judge voting");
-            }
-            console.log("updateDetails : ", updateDetails)
-            CallBack("","vote updated  successfully");
-        });
-    }else if(answerKey === "poll_jude_c_4"){
-        poll_model.poll_details.update({"poll_judge_marks._id":id},{$set : {"poll_judge_marks.$.poll_jude_c_4":value}}, { upsert: true}, function(err, updateDetails) {
-            if (err){
-                throw err;
-                CallBack("error occured while getting judge voting");
-            }
-            console.log("updateDetails : ", updateDetails)
-            CallBack("","vote updated  successfully");
-        });
-    }else{
-        CallBack("update failed");
-    }
+    console.log("answerKey", answerKey, queryStr);
+    console.log("obj id :", id, dataToUpdate, answerKey, queryStr);
+
+    poll_model.poll_details.update({"poll_judge_marks._id":id},{$set : {"poll_judge_marks.$.poll_jude_c_1":c_1, "poll_judge_marks.$.poll_jude_c_2":c_2, "poll_judge_marks.$.poll_jude_c_3":c_3, "poll_judge_marks.$.poll_jude_c_4":c_4}}, { upsert: true}, function(err, updateDetails) {
+        if (err){
+            console.log("err: ", err);
+            throw err;
+            CallBack("error occured while getting judge voting");
+        }
+        console.log("updateDetails : ", updateDetails)
+        CallBack("","vote updated  successfully");
+    });
+
+    // if(answerKey === "poll_jude_c_2"){
+    //     poll_model.poll_details.update({"poll_judge_marks._id":id},{$set : {"poll_judge_marks.$.poll_jude_c_2":value}}, { upsert: true}, function(err, updateDetails) {
+    //         if (err){
+    //             throw err;
+    //             CallBack("error occured while getting judge voting");
+    //         }
+    //         console.log("updateDetails : ", updateDetails)
+    //         CallBack("","vote updated  successfully");
+    //     });
+    // }else if(answerKey === "poll_jude_c_3"){
+    //     poll_model.poll_details.update({"poll_judge_marks._id":id},{$set : {"poll_judge_marks.$.poll_jude_c_3":value}}, { upsert: true}, function(err, updateDetails) {
+    //         if (err){
+    //             throw err;
+    //             CallBack("error occured while getting judge voting");
+    //         }
+    //         console.log("updateDetails : ", updateDetails)
+    //         CallBack("","vote updated  successfully");
+    //     });
+    // }else if(answerKey === "poll_jude_c_4"){
+    //     poll_model.poll_details.update({"poll_judge_marks._id":id},{$set : {"poll_judge_marks.$.poll_jude_c_4":value}}, { upsert: true}, function(err, updateDetails) {
+    //         if (err){
+    //             throw err;
+    //             CallBack("error occured while getting judge voting");
+    //         }
+    //         console.log("updateDetails : ", updateDetails)
+    //         CallBack("","vote updated  successfully");
+    //     });
+    // }else{
+    //     console.log("failed")
+    //     CallBack("update failed");
+    // }
 
 }
 
@@ -1257,17 +1268,17 @@ module.exports = {
 
         var mobile = bodySms.From;
 
-        // UpdateMobile(mobile, function (err, resObj) {
-        //     if(err){
-        //         throw err;
-        //     }
-        //     console.log("UpdateMobile", resObj);
-        // })
+        UpdateMobile(mobile, function (err, resObj) {
+            if(err){
+                throw err;
+            }
+            console.log("UpdateMobile", resObj);
+        })
 
 
         console.log("sms array",smsArray.slice(2,smsArray.length));
         if(smsArray.length>= 2 ) {
-            HandlePolling('KK2018', smsArray[0], smsArray.slice(1,smsArray.length), function (err, status, message) {
+            HandlePolling('KK2017', smsArray[0], smsArray.slice(1,smsArray.length), function (err, status, message) {
 
                 console.log("msg", message);
                 console.log("status", status);
@@ -1280,20 +1291,20 @@ module.exports = {
 
 
         var judgeID  = req.params.judgeId;
-        console.log("body from post", judgeID, editBody);
+        //console.log("body from post", judgeID, editBody);
 
         if(editBody.action === "edit"){
             var idObj = editBody.data;
             var idKey = Object.keys(idObj);
             var id = idKey[0];
             var idData = idObj[id];
-            //console.log("id : ", idKey[0], "data" , idData, idObj) ;
+            console.log("id : ", idKey[0], "data" , idData) ;
             UpdateJudgeVoting(id, idData, function (err, message) {
                 if(err){
                     res.json({"status":false, "message":err});
                     return;
                 }else{
-                    GetJudePollData('KK2018', judgeID, function (err, judgeData) {
+                    GetJudePollData('KK2017', judgeID, function (err, judgeData) {
                         if(err){
                             res.json({"status":false, "message":err});
                             return;
@@ -1312,7 +1323,7 @@ module.exports = {
 
         console.log("in get data");
 
-        GetJudePollData('KK2018',judgeID, function (err, judgeData) {
+        GetJudePollData('KK2017',judgeID, function (err, judgeData) {
 
             //console.log("data for judge", judgeData)
             res.json({"data":judgeData});
@@ -1324,7 +1335,7 @@ module.exports = {
 
         console.log("in get data");
 
-        GetJudgeResult('KK2018', function (err, judgeData) {
+        GetJudgeResult('KK2017', function (err, judgeData) {
 
             //console.log("data for judge", judgeData)
             res.json({"data":judgeData});

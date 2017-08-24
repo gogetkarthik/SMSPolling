@@ -49,7 +49,7 @@ var poll_details_schema = new Schema({
 ]
 });
 
-var mobilenumber = new Schema({
+var mobilenumber_schema = new Schema({
     "mobile_number" : Schema.Types.Mixed
 });
 
@@ -64,7 +64,7 @@ var mobilenumber = new Schema({
 // we need to create a model using it
 var poll_config_fun = mongoose.model('poll_configs', poll_config_schema);
 var poll_details_fun = mongoose.model('poll_details', poll_details_schema);
-var mobilenumberfun = mongoose.model('mobilenumber', poll_details_schema);
+var mobilenumberfun = mongoose.model('mobilenumber', mobilenumber_schema);
 
 
 // make this available to our users in our Node applications

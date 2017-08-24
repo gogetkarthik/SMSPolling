@@ -21,7 +21,7 @@
     <link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css" rel="stylesheet">
-    <link href="Editor-1.5.6/css/editor.dataTables.css" rel="stylesheet">
+    <link href="Editor-1.6.4/css/editor.dataTables.css" rel="stylesheet">
 
 
 
@@ -52,7 +52,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-12" style="padding-bottom: 5px !important;">
+                <div class="col-md-offset-5 col-md-7" style="padding-bottom: 5px !important;">
                     <div class="dropdown ">
                         <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             Select Judge
@@ -70,18 +70,7 @@
 
         <div class="col-md-12">
             <table id="example" class="display" cellspacing="0" width="100%" >
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>Team ID</th>
-                    <th>Team Name</th>
-                    <th> Nutrition (40%) </th>
-                    <th> Uniqueness (30%) </th>
-                    <th> Taste & Aroma (20%) </th>
-                    <th> Presentation (10%) </th>
-                    <th> Total </th>
-                </tr>
-                </thead>
+
             </table>
         </div>
     </div>
@@ -100,7 +89,7 @@
 <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.2.0/js/dataTables.select.min.js"></script>
-<script src="Editor-1.5.6/js/dataTables.editor.js"></script>
+<script src="Editor-1.6.4/js/dataTables.editor.js"></script>
 
 
 <script >
@@ -112,6 +101,13 @@
         var isFirst = true;
 
         var tableName;
+        var isSelect = false;
+
+
+        function  loadEmptyData() {
+            console.log("hide")
+            $('#example').hide();
+        }
 
 
         function loadData(selectId, pollJudgeCategory) {
@@ -157,18 +153,19 @@
                 ajax: "/poll_sample_data/" + selectId,
                 columns: [
                     {
+                        sTitle: "Team Members",
                         data: null,
                         defaultContent: '',
                         className: 'select-checkbox',
                         orderable: false
                     },
-                    {data: "poll_team_id", className: 'alignCenter'},
-                    {data: "poll_team_name", className: 'alignCenter'},
-                    {data: "poll_jude_c_1", className: 'alignCenter'},
-                    {data: "poll_jude_c_2", className: 'alignCenter'},
-                    {data: "poll_jude_c_3", className: 'alignCenter'},
-                    {data: "poll_jude_c_4", className: 'alignCenter'},
-                    {data: "poll_total", className: 'alignCenter'}
+                    {data: "poll_team_id", className: 'alignCenter', sTitle: "Team ID",},
+                    {data: "poll_team_name", className: 'alignCenter', sTitle: "Team Name",},
+                    {data: "poll_jude_c_1", className: 'alignCenter', sTitle: "Nutrition (40%) ",},
+                    {data: "poll_jude_c_2", className: 'alignCenter', sTitle: "Uniqueness (30%)",},
+                    {data: "poll_jude_c_3", className: 'alignCenter', sTitle: "Taste (20%)",},
+                    {data: "poll_jude_c_4", className: 'alignCenter', sTitle: "Presentation (10%)",},
+                    {data: "poll_total", className: 'alignCenter', sTitle: "Total",}
                 ],
                 select: {
                     style: 'os',
@@ -179,10 +176,18 @@
                     {extend: "edit", editor: editor}
                 ]
             });
+
+            if($( "#example" ).hasClass( "hide" )){
+                $( "#example").removeClass();
+            }
+            if ( $("#example").css('display') == 'none' )
+            {
+                $("#example").css("display","block");
+            }
         }
 
         $.ajax({
-            url : "poll/config/KK2018",
+            url : "poll/config/KK2017",
             type: "GET",
             contentType: "application/json",
             dataType   : "json",
@@ -214,7 +219,7 @@
 
                         console.log("drop down text", judgeName, selectId);
                         $('#dropdownMenu1').html(judgeName +'\n<span  class="caret"></span>');
-                        if(tableName && selectId != 11) {
+                        if(tableName && isSelect ) {
                             console.log("remove")
                             tableName.destroy();
                         }
@@ -222,46 +227,16 @@
 
                         console.log("class name : "+$('#example').attr('class'));
 
-//                        if(selectId > 0 && selectId < 4){
-//                            console.log("inside hide")
-//                            $('#example').removeClass('hide');
-//                            $('#example').addClass('show');
-//                        }else {
-//                            console.log("inside select id - selectId")
-//                            $('#example').removeClass('show');
-//                            $('#example').addClass('hide');
-//                            console.log("class name : "+$('#example').attr('class'));
-//                        }
                         if(selectId == 11){
-                            if(tableName) {
-                                console.log("inside remove 124")
-                                tableName.destroy();
-                            }
+                            isSelect = false;
+                            loadEmptyData();
                         }else {
                             console.log("inside remove KKK")
+                            isSelect = true;
                             loadData(selectId, pollJudgeCategory);
                         }
 
-                        console.log("class name : "+$('#example').attr('class'));
-
                     });
-
-                    console.log("select id", selectId);
-//                    if(isFirst) {
-//                        if (selectId > 0 && selectId < 4) {
-//                            $('#example').removeClass('hide');
-//                            $('#example').addClass('show');
-//                        } else {
-//                            $('#example').removeClass('show');
-//                            $('#example').addClass('hide');
-//                        }
-//                        isFirst = false;
-//                    }
-//                    loadData(selectId, pollJudgeCategory);
-//
-//                    console.log("tableName", tableName);
-
-
                 }
             }
         });
