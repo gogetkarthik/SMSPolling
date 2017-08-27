@@ -42,6 +42,7 @@ app.post('/poll/polling', ApiHandler.poll_vote);
 app.get('/poll/config/:poll_id', ApiHandler.poll_configs);
 app.get('/poll/details/:poll_id', ApiHandler.poll_details);
 
+app.get('/poll/contestant/:poll_id', ApiHandler.poll_contestant_details);
 
 /* user creation */
 app.post('/poll/user/create/:pollID', ApiHandler.poll_create_user);

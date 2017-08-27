@@ -1304,6 +1304,14 @@ module.exports = {
             response.json({"data":pollDetails});
         });
     },
+    poll_contestant_details : function(request, response) {
+        var pollId = request.params.poll_id;
+        console.log("pollId : ", pollId);
+        GetPollDetails(pollId,function(err, pollDetails) {
+            if (err) throw err;
+            response.json({"data":pollDetails});
+        });
+    },
     poll_vote : function (request, response) {
         var poll_body = request.body;
         console.log("poll ID: ", poll_body.poll_id);
