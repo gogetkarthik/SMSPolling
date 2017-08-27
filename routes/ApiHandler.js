@@ -1036,15 +1036,53 @@ function UpdateJudgeVoting(objectId, dataToUpdate, CallBack) {
     console.log("answerKey", answerKey, queryStr);
     console.log("obj id :", id, dataToUpdate, answerKey, queryStr);
 
-    poll_model.poll_details.update({"poll_judge_marks._id":id},{$set : {"poll_judge_marks.$.poll_jude_c_1":c_1, "poll_judge_marks.$.poll_jude_c_2":c_2, "poll_judge_marks.$.poll_jude_c_3":c_3, "poll_judge_marks.$.poll_jude_c_4":c_4}}, { upsert: true}, function(err, updateDetails) {
-        if (err){
-            console.log("err: ", err);
-            throw err;
-            CallBack("error occured while getting judge voting");
-        }
-        console.log("updateDetails : ", updateDetails)
-        CallBack("","vote updated  successfully");
-    });
+    if(c_1 > 10 ||  c_1 < 0 ){
+        CallBack({"fieldErrors": [
+            {
+                "name":   "poll_jude_c_1",
+                "status": "score should be b/w 0 to 10"
+            }
+        ]}, '')
+    } else if(c_2 > 10 || c_2 < 0){
+        CallBack({"fieldErrors": [
+            {
+                "name":   "poll_jude_c_2",
+                "status": "score should be b/w 0 to 10"
+            }
+        ]}, '')
+    } else if(c_3 > 10 || c_3 < 0){
+        CallBack({"fieldErrors": [
+            {
+                "name":   "poll_jude_c_3",
+                "status": "score should be b/w 0 to 10"
+            }
+        ]}, '')
+    } else if(c_4 > 10 || c_4 < 0){
+        CallBack({"fieldErrors": [
+            {
+                "name":   "poll_jude_c_4",
+                "status": "score should be b/w 0 to 10"
+            }
+        ]}, '')
+    }else {
+
+        poll_model.poll_details.update({"poll_judge_marks._id": id}, {
+            $set: {
+                "poll_judge_marks.$.poll_jude_c_1": c_1,
+                "poll_judge_marks.$.poll_jude_c_2": c_2,
+                "poll_judge_marks.$.poll_jude_c_3": c_3,
+                "poll_judge_marks.$.poll_jude_c_4": c_4
+            }
+        }, {upsert: true}, function (err, updateDetails) {
+            if (err) {
+                console.log("err: ", err);
+                throw err;
+                CallBack("error occured while getting judge voting");
+            }
+            console.log("updateDetails : ", updateDetails)
+            CallBack("", "vote updated  successfully");
+        });
+    }
 
     // if(answerKey === "poll_jude_c_2"){
     //     poll_model.poll_details.update({"poll_judge_marks._id":id},{$set : {"poll_judge_marks.$.poll_jude_c_2":value}}, { upsert: true}, function(err, updateDetails) {
@@ -1314,15 +1352,23 @@ module.exports = {
             var id = idKey[0];
             var idData = idObj[id];
             console.log("id : ", idKey[0], "data" , idData) ;
+
+
+
             UpdateJudgeVoting(id, idData, function (err, message) {
                 if(err){
-                    res.json({"status":false, "message":err});
-                    return;
+                    res.json(err);
                 }else{
                     GetJudePollData('KK2017', judgeID, function (err, judgeData) {
                         if(err){
-                            res.json({"status":false, "message":err});
-                            return;
+                            //
+                            // res.json({"status":false, "message":err});
+                            res.json({"fieldErrors": [
+                                {
+                                    "name":   "poll_jude_c_1",
+                                    "status": "validation failed"
+                                }
+                            ]})
                         }else {
                             //console.log("data for judge", judgeData)
                             res.json({"data": judgeData});
